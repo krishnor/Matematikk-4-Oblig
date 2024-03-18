@@ -3,14 +3,11 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib import cm
 
-plt.rcParams["figure.figsize"] = [7.50, 3.50]
-plt.rcParams["figure.autolayout"] = True
-
 # Total lengde(romlig) og tid
 L = 1 #kvadrat med lengde 1
 T = 15
 
-# Antall punkter og tidssteg
+# Antall punkter og steglengder
 Nx = 15
 Nt = 10000
 
@@ -31,13 +28,13 @@ for i in range(1, Nx - 1):
     for j in range(1, Nx - 1):
         u[i, j, 0] = np.sin(np.pi * x[i]) * np.sin(np.pi * y[j])
 
-# Sett randbetingelser til 0 for alle sider av domenet
+# Sett randbetingelser til 0 for alle yttersider av domenet
 u[:, 0, :] = 0  
 u[:, -1, :] = 0  
 u[0, :, :] = 0  
 u[-1, :, :] = 0  
 
-# Eksplisitt
+# Eksplisitt euler
 for k in range(0, Nt-1):
     for j in range(1, Nx-1):
         for i in range(1, Nx-1):
@@ -47,6 +44,9 @@ for k in range(0, Nt-1):
 fps = 30 #Frames Per Second 
 frame_delay = 1000/fps #Antall millisekunder mellom hver frame
 frn = 75
+
+plt.rcParams["figure.figsize"] = [7.50, 3.50]
+plt.rcParams["figure.autolayout"] = True
 
 fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 meshX, meshY = np.meshgrid(x, y)
